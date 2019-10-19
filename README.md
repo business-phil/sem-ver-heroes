@@ -14,7 +14,7 @@ SemVer rules:
   "version": "4.2",
   "race": "Dwarf",
   "class": "Cleric",
-  ...
+  // ...
 }
 ```
 
