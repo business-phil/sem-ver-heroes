@@ -10,10 +10,10 @@ SemVer rules:
 **Example**: Otto Otto, level 4 Dwarf Cleric who has acquired extra equipment and/or had a stat change twice since leveling up
 ```json
 {
-  name: "Otto Otto",
-  version: "4.2",
-  race: "Dwarf",
-  class: "Cleric",
+  "name": "Otto Otto",
+  "version": "4.2",
+  "race": "Dwarf",
+  "class": "Cleric",
   ...
 }
 ```
