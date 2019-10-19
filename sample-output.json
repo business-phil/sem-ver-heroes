@@ -1,0 +1,160 @@
+{
+  "name": "Otto Otto",
+  "version": "1.0",
+  "level": 1,
+  "race": "Dwarf",
+  "class": "Cleric",
+  "background": "Soldier",
+  "alignment": "Neutral Good",
+  "core": {
+    "proficiency": 2,
+    "hitPoints": {
+      "current": 12,
+      "max": 12
+    },
+    "speed": 25,
+    "armorClass": 18,
+    "initiative": 0,
+    "passivePerception": 13,
+    "spells": {
+      "modifier": 3,
+      "attack": 5,
+      "saveDC": 13
+    }
+  },
+  "attacks": [{
+    "weaponName": "Warhammer",
+    "attackType": "melee",
+    "range": 5,
+    "hit": 3,
+    "damage": {
+      "base": "1d8",
+      "modifier": 1,
+      "type": "bludgeoning"
+    }
+  }],
+  "abilities": {
+    "stength": 13,
+    "dexterity": 10,
+    "constitution": 16,
+    "intelligence": 8,
+    "wisdom": 16,
+    "charisma": 12
+  },
+  "abilityModifiers": {
+    "stength": 1,
+    "dexterity": 0,
+    "constitution": 3,
+    "intelligence": -1,
+    "wisdom": 3,
+    "charisma": 1
+  },
+  "skills": {
+    "acrobatics": 0,
+    "animalHandling": 3,
+    "arcana": -1,
+    "athletics": 3,
+    "deception": 1,
+    "history": -1,
+    "insight": 3,
+    "intimidation": 3,
+    "investigation": -1,
+    "medicine": 3,
+    "nature": -1,
+    "perception": 3,
+    "performance": 1,
+    "persuasion": 3,
+    "religion": 1,
+    "sleightOfHand": 0,
+    "stealth": 0,
+    "survival": 3
+  },
+  "savingThrows": {
+    "stength": 1,
+    "dexterity": 0,
+    "constitution": 3,
+    "intelligence": -1,
+    "wisdom": 5,
+    "charisma": 3
+  },
+  "proficiencies": {
+    "skills": [
+      "athletics",
+      "intimidation",
+      "persuasion",
+      "religion"
+    ],
+    "savingThrows": [
+      "wisdom",
+      "charisma"
+    ],
+    "resistances": [
+      "poison"
+    ],
+    "armor": [
+      "heavy armor",
+      "medium armor",
+      "light armor",
+      "shields"
+    ],
+    "weapons": [
+      "simple weapons",
+      "battleaxe",
+      "warhammer"
+    ],
+    "languages": [
+      "Common",
+      "Dwarvish"
+    ]
+  },
+  "items": {
+    "currency": {
+      "gold": 10
+    },
+    "equipment": [
+      {
+        "name": "Chain Mail",
+        "type": "heavy armor",
+        "rarity": "common",
+        "isEquipped": true,
+        "armorClass": 16
+      },
+      {
+        "name": "Shield",
+        "type": "shield",
+        "rarity": "common",
+        "isEquipped": true,
+        "armorClass": 2
+      }
+    ],
+    "weapons": [
+      {
+        "name": "Warhammer",
+        "attackType": "melee",
+        "rarity": "common",
+        "isEquipped": true,
+        "baseDamage": "1d8",
+        "damageType": "bludgeoning",
+        "properties": [
+          "versatile"
+        ]
+      }
+    ],
+    "gear": [
+      {
+        "name": "Amulet",
+        "type": "holy symbol"
+      }
+    ]
+  },
+  "spells": [
+    {
+      "name": "Cure Wounds",
+      "level": 1,
+      "type": "evocation",
+      "range": 0,
+      "castingTime": 1,
+      "concentration": false
+    }
+  ]
+}
