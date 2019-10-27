@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-type Character struct {
+type CharacterInput struct {
 	Name          string        `json:"name"`
 	Version       string        `json:"version"`
 	Race          string        `json:"race"`
@@ -20,6 +20,23 @@ type Character struct {
 	Proficiencies Proficiencies `json:"proficiencies"`
 	Items         Items         `json:"items"`
 	Spells        []Spell       `json:"spells"`
+}
+
+type CharacterOutput struct {
+	Name             string        `json:"name"`
+	Version          string        `json:"version"`
+	Level            string        `json:"level"`
+	Race             string        `json:"race"`
+	Class            string        `json:"class"`
+	Background       string        `json:"background"`
+	Alignment        string        `json:"alignment"`
+	Abilities        Abilities     `json:"abilities"`
+	AbilityModifiers Abilities     `json:"abilityModifiers"`
+	SavingThrows     Abilities     `json:"savingThrows"`
+	Skills           Skills        `json:"skills"`
+	Proficiencies    Proficiencies `json:"proficiencies"`
+	Items            Items         `json:"items"`
+	Spells           []Spell       `json:"spells"`
 }
 
 // TODO: consider int type alternatives for small values
@@ -86,6 +103,63 @@ type Spell struct {
 	Concentration bool   `json:"concentration"`
 }
 
+type CoreStats struct {
+	Proficiency       int       `json:"proficiency"`
+	HitPoints         HitPoints `json:"hitPoints"`
+	Speed             int       `json:"speed"`
+	ArmorClass        int       `json:"armorClass"`
+	Initiative        int       `json:"initiative"`
+	PassivePerception int       `json:"passivePerception"`
+	Spells            Spells    `json:"spells"`
+}
+
+type HitPoints struct {
+	Current int `json:"current"`
+	Maximum int `json:"maximum"`
+}
+
+// TODO: Rename Spells to prevent confusion with Spell type
+type Spells struct {
+	Modifier int `json:"modifier"`
+	Attack   int `json:"attack"`
+	SaveDC   int `json:"saveDC"`
+}
+
+type Attack struct {
+	WeaponName string `json:"weaponName"`
+	AttackType string `json:"attackType"`
+	Range      int    `json:"range"`
+	Hit        int    `json:"hit"`
+	Damage     Damage `json:"damage"`
+}
+
+type Damage struct {
+	Base     string `json:"base"`
+	Modifier int    `json:"modifier"`
+	Type     string `json:"type"`
+}
+
+type Skills struct {
+	Acrobatics     int `json:"acrobatics"`
+	AnimalHandling int `json:"animalHandling"`
+	Arcana         int `json:"arcana"`
+	Athletics      int `json:"athletics"`
+	Deception      int `json:"deception"`
+	History        int `json:"history"`
+	Insight        int `json:"insight"`
+	Intimidation   int `json:"intimidation"`
+	Investigation  int `json:"investigation"`
+	Medicine       int `json:"medicine"`
+	Nature         int `json:"nature"`
+	Perception     int `json:"perception"`
+	Performance    int `json:"performance"`
+	Persuasion     int `json:"persuasion"`
+	Religion       int `json:"religion"`
+	SleightOfHand  int `json:"sleightOfHand"`
+	Stealth        int `json:"stealth"`
+	Survival       int `json:"survival"`
+}
+
 func main() {
 	fmt.Println("Hello SemVer Hero!")
 
@@ -104,7 +178,7 @@ func main() {
 		return
 	}
 
-	var character Character
+	var character CharacterInput
 	json.Unmarshal(byteValue, &character)
 
 	fmt.Printf("Successfully parsed input for %s:\n", character.Name)

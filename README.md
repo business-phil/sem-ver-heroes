@@ -22,7 +22,7 @@ SemVer rules:
 
 1. Create a JSON template for D&D 5E character sheet information
 2. Make the template generic so it can be pulled in as a separate library
-3. Add some example
+3. Add some examples
 
 ### What this is
 

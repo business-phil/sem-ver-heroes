@@ -10,7 +10,7 @@
     "proficiency": 2,
     "hitPoints": {
       "current": 12,
-      "max": 12
+      "maximum": 12
     },
     "speed": 25,
     "armorClass": 18,
@@ -49,6 +49,14 @@
     "wisdom": 3,
     "charisma": 1
   },
+  "savingThrows": {
+    "stength": 1,
+    "dexterity": 0,
+    "constitution": 3,
+    "intelligence": -1,
+    "wisdom": 5,
+    "charisma": 3
+  },
   "skills": {
     "acrobatics": 0,
     "animalHandling": 3,
@@ -68,14 +76,6 @@
     "sleightOfHand": 0,
     "stealth": 0,
     "survival": 3
-  },
-  "savingThrows": {
-    "stength": 1,
-    "dexterity": 0,
-    "constitution": 3,
-    "intelligence": -1,
-    "wisdom": 5,
-    "charisma": 3
   },
   "proficiencies": {
     "skills": [
