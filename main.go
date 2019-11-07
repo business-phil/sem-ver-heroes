@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strconv"
 )
 
 type CharacterInput struct {
@@ -22,14 +23,19 @@ type CharacterInput struct {
 	Spells        []Spell       `json:"spells"`
 }
 
+// TODO: Consider removing HitPoints and Speed, which are only used
+// to generate other stats
 type CharacterOutput struct {
 	Name             string        `json:"name"`
 	Version          string        `json:"version"`
-	Level            string        `json:"level"`
+	Level            int           `json:"level"`
 	Race             string        `json:"race"`
 	Class            string        `json:"class"`
 	Background       string        `json:"background"`
 	Alignment        string        `json:"alignment"`
+	HitPoints        int           `json:"hitPoints"`
+	Speed            int           `json:"speed"`
+	Core             CoreStats     `json:"core"`
 	Abilities        Abilities     `json:"abilities"`
 	AbilityModifiers Abilities     `json:"abilityModifiers"`
 	SavingThrows     Abilities     `json:"savingThrows"`
@@ -160,27 +166,48 @@ type Skills struct {
 	Survival       int `json:"survival"`
 }
 
+func (character *CharacterOutput) generateCoreStats() {
+	proficiencyByLevel := [21]int{0, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6}
+	character.Core.Proficiency = proficiencyByLevel[character.Level]
+
+	character.Core.HitPoints.Current = character.HitPoints
+	character.Core.HitPoints.Maximum = character.HitPoints
+	character.Core.Speed = character.Speed
+}
+
 func main() {
 	fmt.Println("Hello SemVer Hero!")
 
 	// TODO: Pass in filename as an argument
-	jsonFile, err := os.Open("sample-input.json")
+	inputFile, err := os.Open("sample-input.json")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer inputFile.Close()
+
+	inputBytes, err := ioutil.ReadAll(inputFile)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	defer jsonFile.Close()
-
-	byteValue, err := ioutil.ReadAll(jsonFile)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	var character CharacterInput
-	json.Unmarshal(byteValue, &character)
+	// TODO: Either consolidate Input/Output types, or use Input to populate Output
+	var character *CharacterOutput
+	json.Unmarshal(inputBytes, &character)
 
 	fmt.Printf("Successfully parsed input for %s:\n", character.Name)
+	fmt.Println(character)
+
+	versionFloat, err := strconv.ParseFloat(character.Version, 64)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	character.Level = int(versionFloat)
+
+	character.generateCoreStats()
+
+	fmt.Printf("Successfully generated stats for %s:\n", character.Name)
 	fmt.Println(character)
 }
