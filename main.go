@@ -26,23 +26,27 @@ type CharacterInput struct {
 // TODO: Consider removing HitPoints and Speed, which are only used
 // to generate other stats
 type CharacterOutput struct {
-	Name             string        `json:"name"`
-	Version          string        `json:"version"`
-	Level            int           `json:"level"`
-	Race             string        `json:"race"`
-	Class            string        `json:"class"`
-	Background       string        `json:"background"`
-	Alignment        string        `json:"alignment"`
-	HitPoints        int           `json:"hitPoints"`
-	Speed            int           `json:"speed"`
-	Core             CoreStats     `json:"core"`
-	Abilities        Abilities     `json:"abilities"`
-	AbilityModifiers Abilities     `json:"abilityModifiers"`
-	SavingThrows     Abilities     `json:"savingThrows"`
-	Skills           Skills        `json:"skills"`
-	Proficiencies    Proficiencies `json:"proficiencies"`
-	Items            Items         `json:"items"`
-	Spells           []Spell       `json:"spells"`
+	Name              string        `json:"name"`
+	Version           string        `json:"version"`
+	Level             int           `json:"level"`
+	Race              string        `json:"race"`
+	Class             string        `json:"class"`
+	Background        string        `json:"background"`
+	Alignment         string        `json:"alignment"`
+	HitPoints         int           `json:"hitPoints"`
+	Speed             int           `json:"speed"`
+	Proficiency       int           `json:"proficiency"`
+	ArmorClass        int           `json:"armorClass"`
+	Initiative        int           `json:"initiative"`
+	PassivePerception int           `json:"passivePerception"`
+	Magic             Magic         `json:"magic"`
+	Abilities         Abilities     `json:"abilities"`
+	AbilityModifiers  Abilities     `json:"abilityModifiers"`
+	SavingThrows      Abilities     `json:"savingThrows"`
+	Skills            Skills        `json:"skills"`
+	Proficiencies     Proficiencies `json:"proficiencies"`
+	Items             Items         `json:"items"`
+	Spells            []Spell       `json:"spells"`
 }
 
 // TODO: consider int type alternatives for small values
@@ -109,23 +113,8 @@ type Spell struct {
 	Concentration bool   `json:"concentration"`
 }
 
-type CoreStats struct {
-	Proficiency       int       `json:"proficiency"`
-	HitPoints         HitPoints `json:"hitPoints"`
-	Speed             int       `json:"speed"`
-	ArmorClass        int       `json:"armorClass"`
-	Initiative        int       `json:"initiative"`
-	PassivePerception int       `json:"passivePerception"`
-	Spells            Spells    `json:"spells"`
-}
-
-type HitPoints struct {
-	Current int `json:"current"`
-	Maximum int `json:"maximum"`
-}
-
-// TODO: Rename Spells to prevent confusion with Spell type
-type Spells struct {
+// TODO: Map class to spell abilities to calculate Magic stats
+type Magic struct {
 	Modifier int `json:"modifier"`
 	Attack   int `json:"attack"`
 	SaveDC   int `json:"saveDC"`
@@ -166,13 +155,21 @@ type Skills struct {
 	Survival       int `json:"survival"`
 }
 
-func (character *CharacterOutput) generateCoreStats() {
-	proficiencyByLevel := [21]int{0, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6}
-	character.Core.Proficiency = proficiencyByLevel[character.Level]
+func calculateAbilityModifier(ability int) int {
+	normalizedAbility := ability - 10
+	if normalizedAbility < 0 {
+		normalizedAbility = normalizedAbility - 1
+	}
+	return int(normalizedAbility / 2)
+}
 
-	character.Core.HitPoints.Current = character.HitPoints
-	character.Core.HitPoints.Maximum = character.HitPoints
-	character.Core.Speed = character.Speed
+func (character *CharacterOutput) GenerateAbilityModifiers() {
+	character.AbilityModifiers.Stength = calculateAbilityModifier(character.Abilities.Stength)
+	character.AbilityModifiers.Dexterity = calculateAbilityModifier(character.Abilities.Dexterity)
+	character.AbilityModifiers.Constitution = calculateAbilityModifier(character.Abilities.Constitution)
+	character.AbilityModifiers.Intelligence = calculateAbilityModifier(character.Abilities.Intelligence)
+	character.AbilityModifiers.Wisdom = calculateAbilityModifier(character.Abilities.Wisdom)
+	character.AbilityModifiers.Charisma = calculateAbilityModifier(character.Abilities.Charisma)
 }
 
 func main() {
@@ -199,6 +196,7 @@ func main() {
 	fmt.Printf("Successfully parsed input for %s:\n", character.Name)
 	fmt.Println(character)
 
+	// Calculate Level
 	versionFloat, err := strconv.ParseFloat(character.Version, 64)
 	if err != nil {
 		fmt.Println(err)
@@ -206,7 +204,15 @@ func main() {
 	}
 	character.Level = int(versionFloat)
 
-	character.generateCoreStats()
+	// Calculate Proficiency
+	proficiencyByLevel := [21]int{0, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6}
+	character.Proficiency = proficiencyByLevel[character.Level]
+
+	// Calculate Ability Modifiers
+	character.GenerateAbilityModifiers()
+
+	// Calculate Initiaitve
+	character.Initiative = character.AbilityModifiers.Dexterity
 
 	fmt.Printf("Successfully generated stats for %s:\n", character.Name)
 	fmt.Println(character)

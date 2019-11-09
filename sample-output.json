@@ -6,21 +6,16 @@
   "class": "Cleric",
   "background": "Soldier",
   "alignment": "Neutral Good",
-  "core": {
-    "proficiency": 2,
-    "hitPoints": {
-      "current": 12,
-      "maximum": 12
-    },
-    "speed": 25,
-    "armorClass": 18,
-    "initiative": 0,
-    "passivePerception": 13,
-    "spells": {
-      "modifier": 3,
-      "attack": 5,
-      "saveDC": 13
-    }
+  "hitPoints": 12,
+  "speed": 25,
+  "proficiency": 2,
+  "armorClass": 18,
+  "initiative": 0,
+  "passivePerception": 13,
+  "magic": {
+    "modifier": 3,
+    "attack": 5,
+    "saveDC": 13
   },
   "attacks": [{
     "weaponName": "Warhammer",
