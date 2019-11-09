@@ -140,6 +140,7 @@ type Equipment struct {
 type Weapon struct {
 	Name       string   `json:"name"`
 	AttackType string   `json:"attackType"`
+	Range      int      `json:"range"`
 	Rarity     string   `json:"rarity"`
 	IsEquipped bool     `json:"isEquipped"`
 	BaseDamage string   `json:"baseDamage"`
@@ -169,43 +170,43 @@ func (character *CharacterOutput) GenerateAbilityModifiers() {
 	character.AbilityModifiers.Charisma = calculateAbilityModifier(character.Abilities.Charisma)
 }
 
-func calculateSkillModifier(skill string, abilityModifier int, proficiencies []string, proficiencyModifier int) int {
+func calculateModifierWithProficiency(skill string, baseModifier int, proficiencies []string, proficiencyBonus int) int {
 	for _, p := range proficiencies {
 		if p == skill {
-			return abilityModifier + proficiencyModifier
+			return baseModifier + proficiencyBonus
 		}
 	}
-	return abilityModifier
+	return baseModifier
 }
 
 func (character *CharacterOutput) GenerateSkillModifiers() {
-	character.SkillModifiers.Acrobatics = calculateSkillModifier("acrobatics", character.AbilityModifiers.Dexterity, character.Proficiencies.Skills, character.ProficiencyBonus)
-	character.SkillModifiers.AnimalHandling = calculateSkillModifier("animalHandling", character.AbilityModifiers.Wisdom, character.Proficiencies.Skills, character.ProficiencyBonus)
-	character.SkillModifiers.Arcana = calculateSkillModifier("arcana", character.AbilityModifiers.Intelligence, character.Proficiencies.Skills, character.ProficiencyBonus)
-	character.SkillModifiers.Athletics = calculateSkillModifier("athletics", character.AbilityModifiers.Strength, character.Proficiencies.Skills, character.ProficiencyBonus)
-	character.SkillModifiers.Deception = calculateSkillModifier("deception", character.AbilityModifiers.Charisma, character.Proficiencies.Skills, character.ProficiencyBonus)
-	character.SkillModifiers.History = calculateSkillModifier("history", character.AbilityModifiers.Intelligence, character.Proficiencies.Skills, character.ProficiencyBonus)
-	character.SkillModifiers.Insight = calculateSkillModifier("insight", character.AbilityModifiers.Wisdom, character.Proficiencies.Skills, character.ProficiencyBonus)
-	character.SkillModifiers.Intimidation = calculateSkillModifier("intimidation", character.AbilityModifiers.Charisma, character.Proficiencies.Skills, character.ProficiencyBonus)
-	character.SkillModifiers.Investigation = calculateSkillModifier("investigation", character.AbilityModifiers.Intelligence, character.Proficiencies.Skills, character.ProficiencyBonus)
-	character.SkillModifiers.Medicine = calculateSkillModifier("medicine", character.AbilityModifiers.Wisdom, character.Proficiencies.Skills, character.ProficiencyBonus)
-	character.SkillModifiers.Nature = calculateSkillModifier("nature", character.AbilityModifiers.Intelligence, character.Proficiencies.Skills, character.ProficiencyBonus)
-	character.SkillModifiers.Perception = calculateSkillModifier("perception", character.AbilityModifiers.Wisdom, character.Proficiencies.Skills, character.ProficiencyBonus)
-	character.SkillModifiers.Performance = calculateSkillModifier("performance", character.AbilityModifiers.Charisma, character.Proficiencies.Skills, character.ProficiencyBonus)
-	character.SkillModifiers.Persuasion = calculateSkillModifier("persuasion", character.AbilityModifiers.Charisma, character.Proficiencies.Skills, character.ProficiencyBonus)
-	character.SkillModifiers.Religion = calculateSkillModifier("religion", character.AbilityModifiers.Intelligence, character.Proficiencies.Skills, character.ProficiencyBonus)
-	character.SkillModifiers.SleightOfHand = calculateSkillModifier("sleightOfHand", character.AbilityModifiers.Dexterity, character.Proficiencies.Skills, character.ProficiencyBonus)
-	character.SkillModifiers.Stealth = calculateSkillModifier("stealth", character.AbilityModifiers.Dexterity, character.Proficiencies.Skills, character.ProficiencyBonus)
-	character.SkillModifiers.Survival = calculateSkillModifier("survival", character.AbilityModifiers.Wisdom, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Acrobatics = calculateModifierWithProficiency("acrobatics", character.AbilityModifiers.Dexterity, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.AnimalHandling = calculateModifierWithProficiency("animalHandling", character.AbilityModifiers.Wisdom, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Arcana = calculateModifierWithProficiency("arcana", character.AbilityModifiers.Intelligence, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Athletics = calculateModifierWithProficiency("athletics", character.AbilityModifiers.Strength, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Deception = calculateModifierWithProficiency("deception", character.AbilityModifiers.Charisma, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.History = calculateModifierWithProficiency("history", character.AbilityModifiers.Intelligence, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Insight = calculateModifierWithProficiency("insight", character.AbilityModifiers.Wisdom, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Intimidation = calculateModifierWithProficiency("intimidation", character.AbilityModifiers.Charisma, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Investigation = calculateModifierWithProficiency("investigation", character.AbilityModifiers.Intelligence, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Medicine = calculateModifierWithProficiency("medicine", character.AbilityModifiers.Wisdom, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Nature = calculateModifierWithProficiency("nature", character.AbilityModifiers.Intelligence, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Perception = calculateModifierWithProficiency("perception", character.AbilityModifiers.Wisdom, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Performance = calculateModifierWithProficiency("performance", character.AbilityModifiers.Charisma, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Persuasion = calculateModifierWithProficiency("persuasion", character.AbilityModifiers.Charisma, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Religion = calculateModifierWithProficiency("religion", character.AbilityModifiers.Intelligence, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.SleightOfHand = calculateModifierWithProficiency("sleightOfHand", character.AbilityModifiers.Dexterity, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Stealth = calculateModifierWithProficiency("stealth", character.AbilityModifiers.Dexterity, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Survival = calculateModifierWithProficiency("survival", character.AbilityModifiers.Wisdom, character.Proficiencies.Skills, character.ProficiencyBonus)
 }
 
 func (character *CharacterOutput) GenerateSavingThrows() {
-	character.SavingThrows.Strength = calculateSkillModifier("strength", character.AbilityModifiers.Strength, character.Proficiencies.SavingThrows, character.ProficiencyBonus)
-	character.SavingThrows.Dexterity = calculateSkillModifier("dexterity", character.AbilityModifiers.Dexterity, character.Proficiencies.SavingThrows, character.ProficiencyBonus)
-	character.SavingThrows.Constitution = calculateSkillModifier("constitution", character.AbilityModifiers.Constitution, character.Proficiencies.SavingThrows, character.ProficiencyBonus)
-	character.SavingThrows.Intelligence = calculateSkillModifier("intelligence", character.AbilityModifiers.Intelligence, character.Proficiencies.SavingThrows, character.ProficiencyBonus)
-	character.SavingThrows.Wisdom = calculateSkillModifier("wisdom", character.AbilityModifiers.Wisdom, character.Proficiencies.SavingThrows, character.ProficiencyBonus)
-	character.SavingThrows.Charisma = calculateSkillModifier("charisma", character.AbilityModifiers.Charisma, character.Proficiencies.SavingThrows, character.ProficiencyBonus)
+	character.SavingThrows.Strength = calculateModifierWithProficiency("strength", character.AbilityModifiers.Strength, character.Proficiencies.SavingThrows, character.ProficiencyBonus)
+	character.SavingThrows.Dexterity = calculateModifierWithProficiency("dexterity", character.AbilityModifiers.Dexterity, character.Proficiencies.SavingThrows, character.ProficiencyBonus)
+	character.SavingThrows.Constitution = calculateModifierWithProficiency("constitution", character.AbilityModifiers.Constitution, character.Proficiencies.SavingThrows, character.ProficiencyBonus)
+	character.SavingThrows.Intelligence = calculateModifierWithProficiency("intelligence", character.AbilityModifiers.Intelligence, character.Proficiencies.SavingThrows, character.ProficiencyBonus)
+	character.SavingThrows.Wisdom = calculateModifierWithProficiency("wisdom", character.AbilityModifiers.Wisdom, character.Proficiencies.SavingThrows, character.ProficiencyBonus)
+	character.SavingThrows.Charisma = calculateModifierWithProficiency("charisma", character.AbilityModifiers.Charisma, character.Proficiencies.SavingThrows, character.ProficiencyBonus)
 }
 
 func (character *CharacterOutput) GenerateMagicStats() {
@@ -220,6 +221,38 @@ func (character *CharacterOutput) GenerateMagicStats() {
 
 	character.Magic.Attack = character.ProficiencyBonus + character.Magic.Modifier
 	character.Magic.SaveDC = 8 + character.Magic.Attack
+}
+
+func (character *CharacterOutput) GenerateAttacks() {
+	for _, weapon := range character.Items.Weapons {
+		attack := Attack{
+			WeaponName: weapon.Name,
+			AttackType: weapon.AttackType,
+			Range:      weapon.Range,
+			Damage: Damage{
+				Base: weapon.BaseDamage,
+				Type: weapon.DamageType,
+			},
+		}
+
+		var hitModifier int
+		if weapon.AttackType == "melee" {
+			hitModifier = character.AbilityModifiers.Strength
+
+			for _, property := range weapon.Properties {
+				if property == "versatile" && character.AbilityModifiers.Dexterity > character.AbilityModifiers.Strength {
+					hitModifier = character.AbilityModifiers.Dexterity
+				}
+			}
+		} else {
+			hitModifier = character.AbilityModifiers.Dexterity
+		}
+
+		attack.Hit = calculateModifierWithProficiency(weapon.Name, hitModifier, character.Proficiencies.Weapons, character.ProficiencyBonus)
+		attack.Damage.Modifier = hitModifier
+
+		character.Attacks = append(character.Attacks, attack)
+	}
 }
 
 func main() {
@@ -273,6 +306,9 @@ func main() {
 
 	// Calculate Magic Stats
 	character.GenerateMagicStats()
+
+	// Calculate Attacks
+	character.GenerateAttacks()
 
 	fmt.Printf("Successfully generated stats for %s:\n", character.Name)
 	fmt.Println(character)

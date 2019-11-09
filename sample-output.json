@@ -138,6 +138,7 @@
       {
         "name": "Warhammer",
         "attackType": "melee",
+        "range": 5,
         "rarity": "common",
         "isEquipped": true,
         "baseDamage": "1d8",
