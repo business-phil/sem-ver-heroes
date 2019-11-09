@@ -172,6 +172,20 @@ func (character *CharacterOutput) GenerateAbilityModifiers() {
 	character.AbilityModifiers.Charisma = calculateAbilityModifier(character.Abilities.Charisma)
 }
 
+func (character *CharacterOutput) GenerateMagicStats() {
+	switch character.Class {
+	case "Bard", "Paladin", "Warlock", "Sorcerer":
+		character.Magic.Modifier = character.AbilityModifiers.Charisma
+	case "Wizard":
+		character.Magic.Modifier = character.AbilityModifiers.Intelligence
+	case "Cleric", "Druid", "Ranger":
+		character.Magic.Modifier = character.AbilityModifiers.Wisdom
+	}
+
+	character.Magic.Attack = character.Proficiency + character.Magic.Modifier
+	character.Magic.SaveDC = 8 + character.Magic.Attack
+}
+
 func main() {
 	fmt.Println("Hello SemVer Hero!")
 
@@ -213,6 +227,9 @@ func main() {
 
 	// Calculate Initiaitve
 	character.Initiative = character.AbilityModifiers.Dexterity
+
+	// Calculate Magic Stats
+	character.GenerateMagicStats()
 
 	fmt.Printf("Successfully generated stats for %s:\n", character.Name)
 	fmt.Println(character)
