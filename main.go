@@ -43,8 +43,15 @@ type CharacterOutput struct {
 	SavingThrows      Abilities     `json:"savingThrows"`
 	SkillModifiers    Skills        `json:"skillModifiers"`
 	Proficiencies     Proficiencies `json:"proficiencies"`
-	Items             Items         `json:"items"`
+	Attacks           []Attack      `json:"attacks"`
 	Spells            []Spell       `json:"spells"`
+	Items             Items         `json:"items"`
+}
+
+type Magic struct {
+	Modifier int `json:"modifier"`
+	Attack   int `json:"attack"`
+	SaveDC   int `json:"saveDC"`
 }
 
 type Abilities struct {
@@ -56,6 +63,27 @@ type Abilities struct {
 	Charisma     int `json:"charisma"`
 }
 
+type Skills struct {
+	Acrobatics     int `json:"acrobatics"`
+	AnimalHandling int `json:"animalHandling"`
+	Arcana         int `json:"arcana"`
+	Athletics      int `json:"athletics"`
+	Deception      int `json:"deception"`
+	History        int `json:"history"`
+	Insight        int `json:"insight"`
+	Intimidation   int `json:"intimidation"`
+	Investigation  int `json:"investigation"`
+	Medicine       int `json:"medicine"`
+	Nature         int `json:"nature"`
+	Perception     int `json:"perception"`
+	Performance    int `json:"performance"`
+	Persuasion     int `json:"persuasion"`
+	Religion       int `json:"religion"`
+	SleightOfHand  int `json:"sleightOfHand"`
+	Stealth        int `json:"stealth"`
+	Survival       int `json:"survival"`
+}
+
 // TODO: replace strings with enums
 type Proficiencies struct {
 	Skills       []string `json:"skills"`
@@ -64,6 +92,29 @@ type Proficiencies struct {
 	Armor        []string `json:"armor"`
 	Weapons      []string `json:"weapons"`
 	Languages    []string `json:"languages"`
+}
+
+type Attack struct {
+	WeaponName string `json:"weaponName"`
+	AttackType string `json:"attackType"`
+	Range      int    `json:"range"`
+	Hit        int    `json:"hit"`
+	Damage     Damage `json:"damage"`
+}
+
+type Damage struct {
+	Base     string `json:"base"`
+	Modifier int    `json:"modifier"`
+	Type     string `json:"type"`
+}
+
+type Spell struct {
+	Name          string `json:"name"`
+	Level         int    `json:"level"`
+	Type          string `json:"type"`
+	Range         int    `json:"range"`
+	CastingTime   int    `json:"castingTime"`
+	Concentration bool   `json:"concentration"`
 }
 
 type Items struct {
@@ -99,57 +150,6 @@ type Weapon struct {
 type Gear struct {
 	Name string `json:"name"`
 	Type string `json:"type"`
-}
-
-type Spell struct {
-	Name          string `json:"name"`
-	Level         int    `json:"level"`
-	Type          string `json:"type"`
-	Range         int    `json:"range"`
-	CastingTime   int    `json:"castingTime"`
-	Concentration bool   `json:"concentration"`
-}
-
-// TODO: Map class to spell abilities to calculate Magic stats
-type Magic struct {
-	Modifier int `json:"modifier"`
-	Attack   int `json:"attack"`
-	SaveDC   int `json:"saveDC"`
-}
-
-type Attack struct {
-	WeaponName string `json:"weaponName"`
-	AttackType string `json:"attackType"`
-	Range      int    `json:"range"`
-	Hit        int    `json:"hit"`
-	Damage     Damage `json:"damage"`
-}
-
-type Damage struct {
-	Base     string `json:"base"`
-	Modifier int    `json:"modifier"`
-	Type     string `json:"type"`
-}
-
-type Skills struct {
-	Acrobatics     int `json:"acrobatics"`
-	AnimalHandling int `json:"animalHandling"`
-	Arcana         int `json:"arcana"`
-	Athletics      int `json:"athletics"`
-	Deception      int `json:"deception"`
-	History        int `json:"history"`
-	Insight        int `json:"insight"`
-	Intimidation   int `json:"intimidation"`
-	Investigation  int `json:"investigation"`
-	Medicine       int `json:"medicine"`
-	Nature         int `json:"nature"`
-	Perception     int `json:"perception"`
-	Performance    int `json:"performance"`
-	Persuasion     int `json:"persuasion"`
-	Religion       int `json:"religion"`
-	SleightOfHand  int `json:"sleightOfHand"`
-	Stealth        int `json:"stealth"`
-	Survival       int `json:"survival"`
 }
 
 func calculateAbilityModifier(ability int) int {

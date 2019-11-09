@@ -17,17 +17,6 @@
     "attack": 5,
     "saveDC": 13
   },
-  "attacks": [{
-    "weaponName": "Warhammer",
-    "attackType": "melee",
-    "range": 5,
-    "hit": 3,
-    "damage": {
-      "base": "1d8",
-      "modifier": 1,
-      "type": "bludgeoning"
-    }
-  }],
   "abilities": {
     "strength": 13,
     "dexterity": 10,
@@ -94,14 +83,37 @@
     ],
     "weapons": [
       "simple weapons",
-      "battleaxe",
-      "warhammer"
+      "Battleaxe",
+      "Warhammer"
     ],
     "languages": [
       "Common",
       "Dwarvish"
     ]
   },
+  "attacks": [
+    {
+      "weaponName": "Warhammer",
+      "attackType": "melee",
+      "range": 5,
+      "hit": 3,
+      "damage": {
+        "base": "1d8",
+        "modifier": 1,
+        "type": "bludgeoning"
+      }
+    }
+  ],
+  "spells": [
+    {
+      "name": "Cure Wounds",
+      "level": 1,
+      "type": "evocation",
+      "range": 0,
+      "castingTime": 1,
+      "concentration": false
+    }
+  ],
   "items": {
     "currency": {
       "gold": 10
@@ -141,15 +153,5 @@
         "type": "holy symbol"
       }
     ]
-  },
-  "spells": [
-    {
-      "name": "Cure Wounds",
-      "level": 1,
-      "type": "evocation",
-      "range": 0,
-      "castingTime": 1,
-      "concentration": false
-    }
-  ]
+  }
 }

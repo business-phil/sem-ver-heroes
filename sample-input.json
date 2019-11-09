@@ -45,6 +45,16 @@
       "Dwarvish"
     ]
   },
+  "spells": [
+    {
+      "name": "Cure Wounds",
+      "level": 1,
+      "type": "evocation",
+      "range": 0,
+      "castingTime": 1,
+      "concentration": false
+    }
+  ],
   "items": {
     "currency": {
       "gold": 10
@@ -84,15 +94,5 @@
         "type": "holy symbol"
       }
     ]
-  },
-  "spells": [
-    {
-      "name": "Cure Wounds",
-      "level": 1,
-      "type": "evocation",
-      "range": 0,
-      "castingTime": 1,
-      "concentration": false
-    }
-  ]
+  }
 }
