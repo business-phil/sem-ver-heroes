@@ -8,7 +8,7 @@
   "alignment": "Neutral Good",
   "hitPoints": 12,
   "speed": 25,
-  "proficiency": 2,
+  "proficiencyBonus": 2,
   "armorClass": 18,
   "initiative": 0,
   "passivePerception": 13,
@@ -29,7 +29,7 @@
     }
   }],
   "abilities": {
-    "stength": 13,
+    "strength": 13,
     "dexterity": 10,
     "constitution": 16,
     "intelligence": 8,
@@ -37,7 +37,7 @@
     "charisma": 12
   },
   "abilityModifiers": {
-    "stength": 1,
+    "strength": 1,
     "dexterity": 0,
     "constitution": 3,
     "intelligence": -1,
@@ -45,14 +45,14 @@
     "charisma": 1
   },
   "savingThrows": {
-    "stength": 1,
+    "strength": 1,
     "dexterity": 0,
     "constitution": 3,
     "intelligence": -1,
     "wisdom": 5,
     "charisma": 3
   },
-  "skills": {
+  "skillModifiers": {
     "acrobatics": 0,
     "animalHandling": 3,
     "arcana": -1,

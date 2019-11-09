@@ -23,8 +23,6 @@ type CharacterInput struct {
 	Spells        []Spell       `json:"spells"`
 }
 
-// TODO: Consider removing HitPoints and Speed, which are only used
-// to generate other stats
 type CharacterOutput struct {
 	Name              string        `json:"name"`
 	Version           string        `json:"version"`
@@ -35,7 +33,7 @@ type CharacterOutput struct {
 	Alignment         string        `json:"alignment"`
 	HitPoints         int           `json:"hitPoints"`
 	Speed             int           `json:"speed"`
-	Proficiency       int           `json:"proficiency"`
+	ProficiencyBonus  int           `json:"proficiencyBonus"`
 	ArmorClass        int           `json:"armorClass"`
 	Initiative        int           `json:"initiative"`
 	PassivePerception int           `json:"passivePerception"`
@@ -43,15 +41,14 @@ type CharacterOutput struct {
 	Abilities         Abilities     `json:"abilities"`
 	AbilityModifiers  Abilities     `json:"abilityModifiers"`
 	SavingThrows      Abilities     `json:"savingThrows"`
-	Skills            Skills        `json:"skills"`
+	SkillModifiers    Skills        `json:"skillModifiers"`
 	Proficiencies     Proficiencies `json:"proficiencies"`
 	Items             Items         `json:"items"`
 	Spells            []Spell       `json:"spells"`
 }
 
-// TODO: consider int type alternatives for small values
 type Abilities struct {
-	Stength      int `json:"stength"`
+	Strength     int `json:"strength"`
 	Dexterity    int `json:"dexterity"`
 	Constitution int `json:"constitution"`
 	Intelligence int `json:"intelligence"`
@@ -164,12 +161,51 @@ func calculateAbilityModifier(ability int) int {
 }
 
 func (character *CharacterOutput) GenerateAbilityModifiers() {
-	character.AbilityModifiers.Stength = calculateAbilityModifier(character.Abilities.Stength)
+	character.AbilityModifiers.Strength = calculateAbilityModifier(character.Abilities.Strength)
 	character.AbilityModifiers.Dexterity = calculateAbilityModifier(character.Abilities.Dexterity)
 	character.AbilityModifiers.Constitution = calculateAbilityModifier(character.Abilities.Constitution)
 	character.AbilityModifiers.Intelligence = calculateAbilityModifier(character.Abilities.Intelligence)
 	character.AbilityModifiers.Wisdom = calculateAbilityModifier(character.Abilities.Wisdom)
 	character.AbilityModifiers.Charisma = calculateAbilityModifier(character.Abilities.Charisma)
+}
+
+func calculateSkillModifier(skill string, abilityModifier int, proficiencies []string, proficiencyModifier int) int {
+	for _, p := range proficiencies {
+		if p == skill {
+			return abilityModifier + proficiencyModifier
+		}
+	}
+	return abilityModifier
+}
+
+func (character *CharacterOutput) GenerateSkillModifiers() {
+	character.SkillModifiers.Acrobatics = calculateSkillModifier("acrobatics", character.AbilityModifiers.Dexterity, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.AnimalHandling = calculateSkillModifier("animalHandling", character.AbilityModifiers.Wisdom, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Arcana = calculateSkillModifier("arcana", character.AbilityModifiers.Intelligence, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Athletics = calculateSkillModifier("athletics", character.AbilityModifiers.Strength, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Deception = calculateSkillModifier("deception", character.AbilityModifiers.Charisma, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.History = calculateSkillModifier("history", character.AbilityModifiers.Intelligence, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Insight = calculateSkillModifier("insight", character.AbilityModifiers.Wisdom, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Intimidation = calculateSkillModifier("intimidation", character.AbilityModifiers.Charisma, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Investigation = calculateSkillModifier("investigation", character.AbilityModifiers.Intelligence, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Medicine = calculateSkillModifier("medicine", character.AbilityModifiers.Wisdom, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Nature = calculateSkillModifier("nature", character.AbilityModifiers.Intelligence, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Perception = calculateSkillModifier("perception", character.AbilityModifiers.Wisdom, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Performance = calculateSkillModifier("performance", character.AbilityModifiers.Charisma, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Persuasion = calculateSkillModifier("persuasion", character.AbilityModifiers.Charisma, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Religion = calculateSkillModifier("religion", character.AbilityModifiers.Intelligence, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.SleightOfHand = calculateSkillModifier("sleightOfHand", character.AbilityModifiers.Dexterity, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Stealth = calculateSkillModifier("stealth", character.AbilityModifiers.Dexterity, character.Proficiencies.Skills, character.ProficiencyBonus)
+	character.SkillModifiers.Survival = calculateSkillModifier("survival", character.AbilityModifiers.Wisdom, character.Proficiencies.Skills, character.ProficiencyBonus)
+}
+
+func (character *CharacterOutput) GenerateSavingThrows() {
+	character.SavingThrows.Strength = calculateSkillModifier("strength", character.AbilityModifiers.Strength, character.Proficiencies.SavingThrows, character.ProficiencyBonus)
+	character.SavingThrows.Dexterity = calculateSkillModifier("dexterity", character.AbilityModifiers.Dexterity, character.Proficiencies.SavingThrows, character.ProficiencyBonus)
+	character.SavingThrows.Constitution = calculateSkillModifier("constitution", character.AbilityModifiers.Constitution, character.Proficiencies.SavingThrows, character.ProficiencyBonus)
+	character.SavingThrows.Intelligence = calculateSkillModifier("intelligence", character.AbilityModifiers.Intelligence, character.Proficiencies.SavingThrows, character.ProficiencyBonus)
+	character.SavingThrows.Wisdom = calculateSkillModifier("wisdom", character.AbilityModifiers.Wisdom, character.Proficiencies.SavingThrows, character.ProficiencyBonus)
+	character.SavingThrows.Charisma = calculateSkillModifier("charisma", character.AbilityModifiers.Charisma, character.Proficiencies.SavingThrows, character.ProficiencyBonus)
 }
 
 func (character *CharacterOutput) GenerateMagicStats() {
@@ -182,7 +218,7 @@ func (character *CharacterOutput) GenerateMagicStats() {
 		character.Magic.Modifier = character.AbilityModifiers.Wisdom
 	}
 
-	character.Magic.Attack = character.Proficiency + character.Magic.Modifier
+	character.Magic.Attack = character.ProficiencyBonus + character.Magic.Modifier
 	character.Magic.SaveDC = 8 + character.Magic.Attack
 }
 
@@ -218,15 +254,22 @@ func main() {
 	}
 	character.Level = int(versionFloat)
 
-	// Calculate Proficiency
-	proficiencyByLevel := [21]int{0, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6}
-	character.Proficiency = proficiencyByLevel[character.Level]
+	// Calculate ProficiencyBonus
+	proficiencyByLevel := [...]int{0, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6}
+	character.ProficiencyBonus = proficiencyByLevel[character.Level]
 
 	// Calculate Ability Modifiers
 	character.GenerateAbilityModifiers()
 
-	// Calculate Initiaitve
+	// Calculate Skill Modifiers
+	character.GenerateSkillModifiers()
+
+	// Calculate Saving Throws
+	character.GenerateSavingThrows()
+
+	// Calculate Initiaitve and Passive Perception
 	character.Initiative = character.AbilityModifiers.Dexterity
+	character.PassivePerception = 10 + character.SkillModifiers.Perception
 
 	// Calculate Magic Stats
 	character.GenerateMagicStats()
