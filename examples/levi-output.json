@@ -1,0 +1,179 @@
+{
+  "name": "Levi Littlebottom",
+  "version": "1.0",
+  "level": 1,
+  "race": "Halfling",
+  "class": "Bard",
+  "background": "Guild Artisan",
+  "alignment": "Chaotic Neutral",
+  "hitPoints": 9,
+  "speed": 25,
+  "proficiencyBonus": 2,
+  "armorClass": 14,
+  "initiative": 3,
+  "passivePerception": 13,
+  "magic": {
+    "modifier": 3,
+    "attack": 5,
+    "saveDC": 13
+  },
+  "abilities": {
+    "strength": 10,
+    "dexterity": 16,
+    "constitution": 13,
+    "intelligence": 8,
+    "wisdom": 12,
+    "charisma": 16
+  },
+  "abilityModifiers": {
+    "strength": 0,
+    "dexterity": 3,
+    "constitution": 1,
+    "intelligence": -1,
+    "wisdom": 1,
+    "charisma": 3
+  },
+  "savingThrows": {
+    "strength": 0,
+    "dexterity": 5,
+    "constitution": 1,
+    "intelligence": -1,
+    "wisdom": 1,
+    "charisma": 5
+  },
+  "skillModifiers": {
+    "acrobatics": 3,
+    "animalHandling": 1,
+    "arcana": -1,
+    "athletics": 0,
+    "deception": 3,
+    "history": -1,
+    "insight": 3,
+    "intimidation": 3,
+    "investigation": -1,
+    "medicine": 1,
+    "nature": -1,
+    "perception": 3,
+    "performance": 5,
+    "persuasion": 5,
+    "religion": -1,
+    "sleightOfHand": 3,
+    "stealth": 5,
+    "survival": 1
+  },
+  "proficiencies": {
+    "skills": [
+      "insight",
+      "perception",
+      "performance",
+      "persuasion",
+      "stealth"
+    ],
+    "savingThrows": [
+      "dexterity",
+      "charisma"
+    ],
+    "resistances": [
+      "fear"
+    ],
+    "armor": [
+      "light armor"
+    ],
+    "weapons": [
+      "simple weapons",
+      "Hand Crossbow",
+      "Longsword",
+      "Rapier",
+      "Shortsword"
+    ],
+    "languages": [
+      "Common",
+      "Halfling",
+      "Elvish"
+    ]
+  },
+  "attacks": [
+    {
+      "weaponName": "Rapier",
+      "attackType": "melee",
+      "range": 5,
+      "hit": 5,
+      "damage": {
+        "base": "1d8",
+        "modifier": 3,
+        "type": "piercing"
+      }
+    },
+    {
+      "weaponName": "Hand Crossbow",
+      "attackType": "ranged",
+      "range": 30,
+      "hit": 5,
+      "damage": {
+        "base": "1d6",
+        "modifier": 3,
+        "type": "piercing"
+      }
+    }
+  ],
+  "spells": [
+    {
+      "name": "Cure Wounds",
+      "level": 1,
+      "type": "evocation",
+      "range": 0,
+      "castingTime": 1,
+      "concentration": false
+    }
+  ],
+  "items": {
+    "currency": {
+      "gold": 20
+    },
+    "equipment": [
+      {
+        "name": "Leather Armor",
+        "type": "light armor",
+        "rarity": "common",
+        "isEquipped": true,
+        "addDexterity": true,
+        "armorClass": 11
+      }
+    ],
+    "weapons": [
+      {
+        "name": "Rapier",
+        "attackType": "melee",
+        "range": 5,
+        "rarity": "common",
+        "isEquipped": true,
+        "baseDamage": "1d8",
+        "damageType": "piercing",
+        "properties": [
+          "finesse",
+          "martial"
+        ]
+      },
+      {
+        "name": "Hand Crossbow",
+        "attackType": "ranged",
+        "range": 30,
+        "rarity": "common",
+        "isEquipped": true,
+        "baseDamage": "1d6",
+        "damageType": "piercing",
+        "properties": [
+          "light",
+          "martial",
+          "range"
+        ]
+      }
+    ],
+    "gear": [
+      {
+        "name": "Lute",
+        "type": "instrument"
+      }
+    ]
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "name": "Levi Littlebottom",
+  "version": "1.0",
+  "race": "Halfling",
+  "class": "Bard",
+  "background": "Guild Artisan",
+  "alignment": "Chaotic Neutral",
+  "hitPoints": 9,
+  "speed": 25,
+  "abilities": {
+    "strength": 10,
+    "dexterity": 16,
+    "constitution": 13,
+    "intelligence": 8,
+    "wisdom": 12,
+    "charisma": 16
+  },
+  "proficiencies": {
+    "skills": [
+      "insight",
+      "perception",
+      "performance",
+      "persuasion",
+      "stealth"
+    ],
+    "savingThrows": [
+      "dexterity",
+      "charisma"
+    ],
+    "resistances": [
+      "fear"
+    ],
+    "armor": [
+      "light armor"
+    ],
+    "weapons": [
+      "simple weapons",
+      "Hand Crossbow",
+      "Longsword",
+      "Rapier",
+      "Shortsword"
+    ],
+    "languages": [
+      "Common",
+      "Halfling",
+      "Elvish"
+    ]
+  },
+  "spells": [
+    {
+      "name": "Cure Wounds",
+      "level": 1,
+      "type": "evocation",
+      "range": 0,
+      "castingTime": 1,
+      "concentration": false
+    }
+  ],
+  "items": {
+    "currency": {
+      "gold": 20
+    },
+    "equipment": [
+      {
+        "name": "Leather Armor",
+        "type": "light armor",
+        "rarity": "common",
+        "armorClass": 11,
+        "addDexterity": true,
+        "isEquipped": true
+      }
+    ],
+    "weapons": [
+      {
+        "name": "Rapier",
+        "attackType": "melee",
+        "range": 5,
+        "baseDamage": "1d8",
+        "damageType": "piercing",
+        "rarity": "common",
+        "isEquipped": true,
+        "properties": [
+          "finesse",
+          "martial"
+        ]
+      },
+      {
+        "name": "Hand Crossbow",
+        "attackType": "ranged",
+        "range": 30,
+        "baseDamage": "1d6",
+        "damageType": "piercing",
+        "rarity": "common",
+        "isEquipped": true,
+        "properties": [
+          "light",
+          "martial",
+          "range"
+        ]
+      }
+    ],
+    "gear": [
+      {
+        "name": "Lute",
+        "type": "instrument"
+      }
+    ]
+  }
+}

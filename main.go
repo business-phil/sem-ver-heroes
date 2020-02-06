@@ -129,11 +129,12 @@ type Currency struct {
 }
 
 type Equipment struct {
-	Name       string `json:"name"`
-	Type       string `json:"type"`
-	Rarity     string `json:"rarity"`
-	IsEquipped bool   `json:"isEquipped"`
-	ArmorClass int    `json:"armorClass"`
+	Name         string `json:"name"`
+	Type         string `json:"type"`
+	Rarity       string `json:"rarity"`
+	IsEquipped   bool   `json:"isEquipped"`
+	AddDexterity bool   `json:"addDexterity"`
+	ArmorClass   int    `json:"armorClass"`
 }
 
 // TODO: add type for dice value (ex: "1d8")
@@ -240,7 +241,7 @@ func (character *CharacterOutput) GenerateAttacks() {
 			hitModifier = character.AbilityModifiers.Strength
 
 			for _, property := range weapon.Properties {
-				if property == "versatile" && character.AbilityModifiers.Dexterity > character.AbilityModifiers.Strength {
+				if property == "finesse" && character.AbilityModifiers.Dexterity > character.AbilityModifiers.Strength {
 					hitModifier = character.AbilityModifiers.Dexterity
 				}
 			}
@@ -255,11 +256,29 @@ func (character *CharacterOutput) GenerateAttacks() {
 	}
 }
 
+func (character *CharacterOutput) GenerateArmorClass() {
+	var baseArmorClass int
+	for _, armor := range character.Items.Equipment {
+		if armor.IsEquipped {
+			if armor.AddDexterity {
+				baseArmorClass = baseArmorClass + armor.ArmorClass + character.AbilityModifiers.Dexterity
+			} else {
+				baseArmorClass = baseArmorClass + armor.ArmorClass
+			}
+		}
+	}
+
+	character.ArmorClass = baseArmorClass
+}
+
 func main() {
 	fmt.Println("Hello SemVer Hero!")
 
+	inputFileName := "examples/levi-input.json"
+	outputFileName := "examples/levi-output.json"
+
 	// TODO: Pass in filename as an argument
-	inputFile, err := os.Open("sample-input.json")
+	inputFile, err := os.Open(inputFileName)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -310,6 +329,21 @@ func main() {
 	// Calculate Attacks
 	character.GenerateAttacks()
 
+	// Calculate Armor Class
+	character.GenerateArmorClass()
+
 	fmt.Printf("Successfully generated stats for %s:\n", character.Name)
 	fmt.Println(character)
+
+	data, err := json.MarshalIndent(character, "", "  ")
+	if err != nil {
+		panic(err)
+	}
+
+	err = ioutil.WriteFile(outputFileName, data, 0644)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("Successfully wrote %s's stats to  %s\n", character.Name, outputFileName)
 }
